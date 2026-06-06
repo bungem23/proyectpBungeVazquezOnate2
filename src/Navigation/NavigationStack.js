@@ -1,19 +1,32 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import Login from '../Screen/Login';
+import Login from '../Screen/Login'
 import Register from '../Screen/Register'
-import TabNavigation from './NavigationTabs';
+import NavigationTabs from './NavigationTabs'
 
-const Stack = createNativeStackNavigator();
 
-export default function NavigationStack() {
+
+
+import { FA6Style } from "@expo/vector-icons/build/FontAwesome6";
+
+
+const Stack=createNativeStackNavigator();
+
+
+function Navegacionstack(props){
     return(
         <NavigationContainer>
             <Stack.Navigator>
-                <Stack.Screen name="Login" component={Login}/>
-                <Stack.Screen name="Register" component={Register}/>
-                <Stack.Screen name="NavegacionTab" component={TabNavigation}/>
+                
+                <Stack.Screen name="Register" component={Register} options={{headerShown: false}}/>
+                <Stack.Screen name="Login" component={Login} options={{headerShown: false}}/>
+                <Stack.Screen name="NavigationTabs" component={NavigationTabs} options={{headerShown: false}}/>
+           
+               
             </Stack.Navigator>
         </NavigationContainer>
     )
 }
+
+
+export default Navegacionstack

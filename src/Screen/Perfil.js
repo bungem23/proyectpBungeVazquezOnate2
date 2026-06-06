@@ -1,15 +1,10 @@
-import {Text, View, Pressable} from "react-native";
+import React from 'react';
+import { useState } from 'react';
+import { Text, View, StyleSheet, Pressable, TextInput } from 'react-native';
 
-function Perfil(props){
-    return(
-        <View>
-            <Text>Profile</Text>
-            <Pressable onPress={()=> props.navigation.navigate("Login")}>
-                <Text>Login</Text>
-            </Pressable>
-
-        </View>
+function Perfil(props) {
+    return( 
+        <View><Text>Perfil</Text></View>
     )
 }
-
-export default Perfil;
+export default Perfil

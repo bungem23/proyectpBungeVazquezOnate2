@@ -1,15 +1,10 @@
-import {Text, View, Pressable} from "react-native";
+import React from 'react';
+import { useState } from 'react';
+import { Text, View, StyleSheet, Pressable, TextInput } from 'react-native';
 
-function Posteo(props){
-    return(
-        <View>
-            <Text>Posteo</Text>
-            <Pressable onPress={()=> props.navigation.navigate("Login")}>
-                <Text>Login</Text>
-            </Pressable>
-
-        </View>
+function Posteo(props) {
+    return( 
+        <View><Text>Posteo</Text></View>
     )
 }
-
-export default Posteo;
+export default Posteo

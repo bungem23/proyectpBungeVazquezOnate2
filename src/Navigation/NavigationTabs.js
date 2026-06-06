@@ -1,19 +1,24 @@
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import Home from '../Screen/Home';
+import React from 'react';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+
 import Perfil from '../Screen/Perfil';
-import Posteo from "../Screen/Posteo"
+import Posteo from '../Screen/Posteo';
+import NavigationStackAnidado from './NavigationStackAnidado';
+import { FontAwesome } from '@expo/vector-icons';
 
 
 const Tab = createBottomTabNavigator();
 
-function TabNavigation(){
-    return(
-        <Tab.Navigator>
-            <Tab.Screen name='Home' component={Home}/>
-            <Tab.Screen name='Perfil' component={Perfil}/>
-            <Tab.Screen name="Posteo" component={Posteo}/>
-        </Tab.Navigator>
-    )
-}
 
-export default TabNavigation;
+export default function HomeMenu() {
+  return (
+    <Tab.Navigator screenOptions={{ tabBarShowLabel: false }}>
+      <Tab.Screen name="NavigationStackAnidado" component={NavigationStackAnidado} options={{ headerShown: false }} />
+      <Tab.Screen name="Posteo" component={Posteo} options={{ headerShown: false }} />
+      <Tab.Screen name="Perfil" component={Perfil} options={{ headerShown: false }} />
+      
+      
+      
+    </Tab.Navigator>
+  );
+}

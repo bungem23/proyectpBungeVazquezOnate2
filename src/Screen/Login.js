@@ -1,54 +1,16 @@
-import {View, Text, TextInput, Pressable} from 'react-native';
-import {useState} from 'react';
-import { StyleSheet } from 'react-native';
-import {auth} from "../Firebase/config"
+import React from 'react';
+import { useState } from 'react';
+import { Text, View, StyleSheet, Pressable, TextInput } from 'react-native';
 
-function Login (props){
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    
-
-    return(
+function Login(props) {
+    return (
         <View>
             <Text>Login</Text>
-            <TextInput
-                style={styles.container}
-                keyboardType='email-address'
-                placeholder='email'
-                onChangeText={text => setEmail(text)}
-                value={email}
-            />
-            <TextInput
-                style={styles.container}
-                keyboardType='default'
-                placeholder='password'
-                secureTextEntry={true}
-                onChangeText={text => setPassword(text)}
-                value={password}
-            />
-            {/* on press hay que cambiarlo, lo pongo asi para ir trabajando otras cosas */   }         
-            <Pressable style={styles.container} onPress={()=> props.navigation.navigate("NavegacionTab")}>
-                <Text>Login</Text>
+            <Pressable onPress={() => props.navigation.navigate('NavigationTabs')}>
+                <Text>Entrar a la app</Text>
             </Pressable>
-
-            <Pressable onPress={()=> props.navigation.navigate('Register')}>
-                <Text>Ir a register</Text>
-            </Pressable>
+            {/*Hacer que solo se pueda acceder a Home si se completa correctamente el Log in*/}
         </View>
     )
 }
-
-const styles = StyleSheet.create({
-    container: {
-        backgroundColor: 'grey',
-        padding: 5,
-        margin: 10,
-        fontSize: 16,
-        alignSelf: 'center',
-        borderRadius: 8,
-        borderColor: 'black',
-        borderWidth: 2,
-    }
-})
-
-export default Login;
+export default Login
