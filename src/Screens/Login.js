@@ -9,12 +9,18 @@ function Login({ navigation }) {
     const [loggedIn, setLoggedIn] = useState(false);
 
     useEffect(() => {
+        auth.onAuthStateChanged(user => {
+            if (user) {
+                setLoggedIn(true);
+            }
+        });
+
         if (loggedIn) {
             navigation.navigate('NavigationTabs');
         }
     }, [loggedIn, navigation]);
 
-    const handleLogin = () => {
+    const controlarLogin = () => {
         auth
             .signInWithEmailAndPassword(email, password)
             .then(() => setLoggedIn(true))
@@ -43,7 +49,7 @@ function Login({ navigation }) {
 
             {loginError ? <Text style={styles.error}>{loginError}</Text> : null}
 
-            <Pressable style={styles.button} onPress={handleLogin}>
+            <Pressable style={styles.button} onPress={controlarLogin}>
                 <Text style={styles.buttonText}>Entrar en la App</Text>
             </Pressable>
 

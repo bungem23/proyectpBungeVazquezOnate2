@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { View, Text, TextInput, Pressable, StyleSheet } from 'react-native';
 import { auth } from '../Firebase/config';
 
-export default function Register({ navigation }) {
+function Register({ navigation }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [registered, setRegistered] = useState(false);
@@ -15,6 +15,8 @@ export default function Register({ navigation }) {
   }, [registered, navigation]);
 
   function onSubmit() {
+    console.log('Email:', email);
+    console.log('Password:', password);
     auth.createUserWithEmailAndPassword(email, password)
       .then((response) => setRegistered(true))
       .catch((error) => setRegisterError('Error al registrar el usuario'));
@@ -84,3 +86,5 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
 });
+
+export default Register;
