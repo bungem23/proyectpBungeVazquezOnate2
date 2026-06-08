@@ -1,4 +1,5 @@
 import {Text, View, Pressable} from "react-native";
+import Post from '../Component/Post';
 
 function Home(props){
     return(
@@ -7,7 +8,7 @@ function Home(props){
             <Pressable onPress={()=> props.navigation.navigate("Login")}>
                 <Text>Login</Text>
             </Pressable>
-
+            <Post nombreUsuario="marcos" fecha="20202" texto="diusaudhsahnudias"/>
         </View>
     )
 }
