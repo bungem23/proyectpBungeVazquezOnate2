@@ -15,6 +15,11 @@ export default function Register({ navigation }) {
   }, [registered, navigation]);
 
   function onSubmit() {
+
+    if (!email.includes("@") || password.length < 6) {
+            setRegisterError("Mail inválido o contraseña menor a 6 caracteres.");
+            return; 
+        }
     auth.createUserWithEmailAndPassword(email, password)
       .then((response) => setRegistered(true))
       .catch((error) => setRegisterError('Error al registrar el usuario'));
