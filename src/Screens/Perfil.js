@@ -1,9 +1,35 @@
 import React from 'react';
-import { useState } from 'react';
-import {auth} from "../Firebase/config"
-import { Text, View, StyleSheet, Pressable, TextInput } from 'react-native';
+import { useState, useEffect} from 'react';
 
-function Perfil({Navigation}) {
+import { Text, View, StyleSheet, Pressable, TextInput } from 'react-native';
+import Post from '../Component/Post';
+import { db, auth } from '../Firebase/config';
+
+
+function Perfil({navigation}) {
+        const [posteos, setPosteos] = useState('');
+        const [loading, setLoading] = useState('');
+
+    useEffect(()=> {
+        db.collection('posts').onSnapshot(
+            docs =>{
+                let posts=[];
+                docs.forEach(doc=> {
+                    posts.push({
+                        id: doc.id,
+                        data:doc.data()
+                    })
+                    
+                    {/*abajo poner un if para que avise que estan cargando*/}
+        
+                })
+        setPosteos(posts)
+        setLoading(false)
+            }
+        
+        )
+         
+    }, [])
     function logOut(){
         auth.signOut()
         navigation.navigate('Register')
@@ -14,6 +40,14 @@ function Perfil({Navigation}) {
             <Pressable style={styles.button} onPress={()=>logOut()}>
                 <Text style={styles.buttonText}>Desloguearse</Text>
             </Pressable>
+            <Flatlist data={posteos}
+            keyExtractor={item=> item.id.toString()}
+            renderItem={({item})=><Post>
+                nombreUsuario={item.data.owner}
+                fecha={item.data.fecha}
+                texto={item.data.description}
+            </Post>}
+            ></Flatlist>
         </View>
     )
 }

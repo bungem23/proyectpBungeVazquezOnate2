@@ -39,7 +39,7 @@ function Register({ navigation }) {
         placeholder="Email"
         keyboardType="email-address"
         value={email}
-        onChangeText={text => setEmail(text)}
+        onChangeText={text => setEmail(text)} 
       />
       <TextInput
         style={styles.input}
