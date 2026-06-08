@@ -4,7 +4,10 @@ import NavegacionStack  from './src/Navigation/NavigationStack'
 
 export default function App() {
   return (
-    <NavegacionStack/>
+    <>
+      <NavegacionStack />
+
+    </>
   );
 }
 

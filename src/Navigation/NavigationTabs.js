@@ -1,8 +1,8 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import Perfil from '../Screen/Perfil';
-import Posteo from '../Screen/Posteo';
+import Perfil from '../Screens/Perfil';
+import Posteo from '../Screens/Posteo';
 import NavigationStackAnidado from './NavigationStackAnidado';
 import { FontAwesome } from '@expo/vector-icons';
 

@@ -1,6 +1,6 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import Comentar from '../Screen/Comentar'
-import HomePage from '../Screen/HomePage'
+import Comentar from '../Screens/Comentar'
+import HomePage from '../Screens/HomePage'
 import { FA6Style } from "@expo/vector-icons/build/FontAwesome6";
 
 
