@@ -1,13 +1,13 @@
-import {Text, Pressable, TextInput} from 'react-native'
+import {View ,Text, Pressable, TextInput} from 'react-native'
 import SimpleLineIcons from '@expo/vector-icons/SimpleLineIcons';
 import {StyleSheet} from 'react-native';
 
 function Post(props){
     return(
         <View>
-            <Text>{nombreUsuario}</Text>
-            <Text>{fecha}</Text>
-            <Text>{texto}</Text>
+            <Text>{props.nombreUsuario}</Text>
+            <Text>{props.fecha}</Text>
+            <Text>{props.texto}</Text>
             <Pressable><SimpleLineIcons name="like" size={24} color="black" /></Pressable>
         </View>
     )
