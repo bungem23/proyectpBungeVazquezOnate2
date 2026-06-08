@@ -4,7 +4,7 @@ import {StyleSheet} from 'react-native';
 
 function Post(props){
     return(
-        <View>
+        <View style={styles.container}>
             <Text>{props.nombreUsuario}</Text>
             <Text>{props.fecha}</Text>
             <Text>{props.texto}</Text>
