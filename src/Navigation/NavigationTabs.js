@@ -16,9 +16,6 @@ export default function HomeMenu() {
       <Tab.Screen name="NavigationStackAnidado" component={NavigationStackAnidado} options={{ headerShown: false }} />
       <Tab.Screen name="Posteo" component={Posteo} options={{ headerShown: false }} />
       <Tab.Screen name="Perfil" component={Perfil} options={{ headerShown: false }} />
-      
-      
-      
     </Tab.Navigator>
   );
 }

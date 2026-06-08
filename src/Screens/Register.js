@@ -10,14 +10,14 @@ export default function Register({ navigation }) {
 
   useEffect(() => {
     if (registered) {
-      navigation.navigate('NavigationTabs');
+      navigation.navigate('Login');
     }
   }, [registered, navigation]);
 
   function onSubmit() {
     auth.createUserWithEmailAndPassword(email, password)
-      .then(() => setRegistered(true))
-      .catch(() => setRegisterError('Error al registrar el usuario'));
+      .then((response) => setRegistered(true))
+      .catch((error) => setRegisterError('Error al registrar el usuario'));
   }
 
   return (
