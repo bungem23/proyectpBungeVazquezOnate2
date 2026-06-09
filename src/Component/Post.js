@@ -2,15 +2,45 @@ import {View ,Text, Pressable, TextInput} from 'react-native'
 import Entypo from '@expo/vector-icons/Entypo';
 import {StyleSheet} from 'react-native';
 import {db} from '../Firebase/config'
-import { useEffect } from 'react';
+import { useState } from 'react';
 
 function Post(props){
-   
+    const [likes, setLikes] = useState(props.likes)
+    const [likeado, setLikeado] = useState(false)
+
+    const Likear = () => {
+        const nuevoLike = likes + 1;
+        setLikes(nuevoLike);
+        setLikeado(true);
+        db.collection('posts')
+        .doc(props.id)
+        .update({
+            likes: nuevoLike
+        })
+        .then(()=>{
+            console.log("Nuevo Like");          
+        })
+    }
+
+    const Deslikear = () => {
+        const nuevoLike = likes - 1;
+        setLikes(nuevoLike);
+        setLikeado(false); 
+        db.collection('posts')
+        .doc(props.id)
+        .update({ 
+            likes: nuevoLike 
+        })
+        .then(()=> {
+            console.log("Like removido");
+        })
+    }
+
     return(
         <View style={styles.container}>
             <Text style={styles.nombreUsuario}>{props.nombreUsuario}</Text>
             <Text style={styles.texto}>{props.texto}</Text>
-            <Pressable><Entypo name="heart-outlined" size={24} color="black" /></Pressable>
+            <Pressable onPress={()=> likeado ? Deslikear() : Likear()}><Entypo name="heart" size={24} color={likeado ? "red" : "black" } />{likes}</Pressable>
         </View>
     )
 };
