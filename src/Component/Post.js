@@ -5,19 +5,9 @@ import {db} from '../Firebase/config'
 import { useEffect } from 'react';
 
 function Post(props){
-    useEffect( ()=> {
-        db.collection('posts')
-            .doc()
-            .update({
-                likes: valor+1
-            })
-            .then (()=> {
+   
 
-            })
-
-        
-    }, []);
-
+    
 
     return(
         <View style={styles.container}>

@@ -10,19 +10,14 @@ function Posteo(props) {
         db.collection('posts').add({
             owner: auth.currentUser.email,
             description: texto,
-            createdAt: formatearFecha(Date.now()),
+            
             likes: 0,
         })
             .then()
             .catch(e => console.log(e));
     };
 
-    function fecha() {
-        const date = new Date();
-        return date.toLocaleDateString('es-AR');
-    }
-              
-    fecha(Date.now());
+    
 
     return (
         <View style={styles.container}>
