@@ -1,55 +1,57 @@
 import React from 'react';
-import { useState, useEffect} from 'react';
-
-import { Text, View, StyleSheet, Pressable, TextInput } from 'react-native';
+import { useState, useEffect } from 'react';
+import { Text, View, StyleSheet, Pressable, TextInput, FlatList } from 'react-native';
 import Post from '../Component/Post';
 import { db, auth } from '../Firebase/config';
 
 
-function Perfil({navigation}) {
-        const [posteos, setPosteos] = useState('');
-        const [loading, setLoading] = useState('');
+function Perfil({ navigation }) {
+    const [posteos, setPosteos] = useState('');
+    const [loading, setLoading] = useState('');
 
-    useEffect(()=> {
+    useEffect(() => {
         db.collection('posts').onSnapshot(
-            docs =>{
-                let posts=[];
-                docs.forEach(doc=> {
+            docs => {
+                let posts = [];
+                docs.forEach(doc => {
                     posts.push({
                         id: doc.id,
-                        data:doc.data()
+                        data: doc.data()
                     })
-                    
-                    {/*abajo poner un if para que avise que estan cargando*/}
-        
+
+                    {/*abajo poner un if para que avise que estan cargando*/ }
+
                 })
-        setPosteos(posts)
-        setLoading(false)
+                setPosteos(posts)
+                setLoading(false)
             }
-        
+
         )
-         
+
     }, [])
-    function logOut(){
+    function logOut() {
         auth.signOut()
         navigation.navigate('Register')
     }
-    return( 
+    return (
         <View style={styles.container}>
             <Text style={styles.title}>Perfil</Text>
-            <Pressable style={styles.button} onPress={()=>logOut()}>
+            <Pressable style={styles.button} onPress={() => logOut()}>
                 <Text style={styles.buttonText}>Desloguearse</Text>
             </Pressable>
-            <Flatlist data={posteos}
-            keyExtractor={item=> item.id.toString()}
-            renderItem={({item})=><Post>
-                nombreUsuario={item.data.owner}
-                fecha={item.data.fecha}
-                texto={item.data.description}
-            </Post>}
-            ></Flatlist>
-        </View>
-    )
+        <FlatList
+            data={posteos}
+            keyExtractor={item => item.id.toString()}
+            renderItem={({ item }) => (
+                <Post
+                    nombreUsuario={item.data.owner}
+                    fecha={item.data.fecha}
+                    texto={item.data.description}
+                />
+            )}
+        />
+    </View>
+);
 }
 const styles = StyleSheet.create({
     container: { flex: 1, justifyContent: 'center', padding: 20 },
@@ -60,4 +62,4 @@ const styles = StyleSheet.create({
     error: { color: 'red', marginBottom: 8 },
 });
 
-export default Perfil
+export default Perfil;

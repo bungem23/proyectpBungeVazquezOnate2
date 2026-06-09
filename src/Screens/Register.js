@@ -3,6 +3,7 @@ import { View, Text, TextInput, Pressable, StyleSheet } from 'react-native';
 import { auth } from '../Firebase/config';
 
 function Register({ navigation }) {
+  const [Username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [registered, setRegistered] = useState(false);
@@ -14,26 +15,34 @@ function Register({ navigation }) {
     }
   }, [registered, navigation]);
 
-  function onSubmit() {
-
-
+function onSubmit() {
     if (!email.includes("@") || password.length < 6) {
-            setRegisterError("Mail inválido o contraseña menor a 6 caracteres.");
-            return; 
-        }
-
-    console.log('Email:', email);
-    console.log('Password:', password);
+        setRegisterError("Mail inválido o contraseña menor a 6 caracteres.");
+        return;
+    }
 
     auth.createUserWithEmailAndPassword(email, password)
-      .then((response) => setRegistered(true))
-      .catch((error) => setRegisterError('Error al registrar el usuario'));
-  }
-
+        .then((response) => {
+            db.collection('usuarios').add({
+                email: email,
+                username: Username,
+            })
+            .then(() => setRegistered(true))
+            .catch(e => console.log(e));
+        })
+        .catch(() => setRegisterError('Error al registrar el usuario'));
+}
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Formulario de Registro</Text>
 
+      <TextInput
+        style={styles.input}
+        placeholder="Nombre de usuario"
+        keyboardType="Username"
+        value={Username}
+        onChangeText={text => setUsername(text)} 
+      />
       <TextInput
         style={styles.input}
         placeholder="Email"
@@ -51,7 +60,7 @@ function Register({ navigation }) {
 
       {registerError ? <Text style={styles.error}>{registerError}</Text> : null}
 
-      <Pressable style={styles.button} onPress={() => onSubmit()}>
+      <Pressable style={styles.button} onPress={() => {onSubmit()}}>
         <Text style={styles.buttonText}>Registrarse</Text>
       </Pressable>
 

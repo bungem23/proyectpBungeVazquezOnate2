@@ -17,9 +17,10 @@ function Posteo(props) {
             .catch(e => console.log(e));
     };
 
+    const usuario = auth.currentUser;
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Ususaud</Text>
+            <Text style={styles.title}>{usuario.username}</Text>
             <TextInput
                 style={styles.input}
                 value={texto}
