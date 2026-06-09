@@ -23,6 +23,7 @@ function Posteo(props) {
     }
               
     fecha(Date.now());
+    console.log(fecha(Date.now()));
 
     return (
         <View style={styles.container}>

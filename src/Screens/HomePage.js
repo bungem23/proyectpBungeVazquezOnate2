@@ -27,7 +27,6 @@ function HomePage(props) {
     return (
         <View>
             <Text>Home</Text>
-
             <FlatList
                 data={posts}
                 keyExtractor={item => item.id}
@@ -36,6 +35,7 @@ function HomePage(props) {
                         nombreUsuario={item.doc.owner}
                         fecha={item.doc.fecha}
                         texto={item.doc.description}
+                        id={item.id}
                     />
                 )}
             />
