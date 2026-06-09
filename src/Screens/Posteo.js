@@ -7,23 +7,15 @@ function Posteo(props) {
     const [texto, setTexto] = useState("");
 
     const Postear = () => {
+        const fecha = Date.now();
         db.collection('posts').add({
             owner: auth.currentUser.email,
             description: texto,
-            createdAt: formatearFecha(Date.now()),
             likes: 0,
         })
             .then()
             .catch(e => console.log(e));
     };
-
-    function fecha() {
-        const date = new Date();
-        return date.toLocaleDateString('es-AR');
-    }
-              
-    fecha(Date.now());
-    console.log(fecha(Date.now()));
 
     return (
         <View style={styles.container}>
@@ -34,7 +26,7 @@ function Posteo(props) {
                 onChangeText={texto => setTexto(texto)}
             />
             <Pressable style={styles.button} onPress={() => { Postear(); props.navigation.navigate('NavigationTabs'); }}>
-                <Text tyle={styles.buttonnText}> Postear</Text>
+                <Text style={styles.buttonText}> Postear</Text>
             </Pressable>
         </View>
     );

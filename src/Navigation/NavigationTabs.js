@@ -16,7 +16,7 @@ const Tab = createBottomTabNavigator();
 export default function HomeMenu() {
   return (
     <Tab.Navigator screenOptions={{ tabBarShowLabel: false }}>
-      <Tab.Screen name="NavigationStackAnidado" component={NavigationStackAnidado} options={{ headerShown: false }, {tabBarIcon: ()=> <AntDesign name="home" size={24} color="black" />}} />
+      <Tab.Screen name="Home" component={NavigationStackAnidado} options={{ headerShown: false }, {tabBarIcon: ()=> <AntDesign name="home" size={24} color="black" />}} />
       <Tab.Screen name="Posteo" component={Posteo} options={{ headerShown: false }, {tabBarIcon: ()=> <AntDesign name="plus-circle" size={24} color="black" />}} />
       <Tab.Screen name="Perfil" component={Perfil} options={{ headerShown: false }, {tabBarIcon: ()=> <Feather name="user" size={24} color="black" />}} />
     </Tab.Navigator>
