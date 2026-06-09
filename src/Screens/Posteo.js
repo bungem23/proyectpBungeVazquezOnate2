@@ -10,11 +10,19 @@ function Posteo(props) {
         db.collection('posts').add({
             owner: auth.currentUser.email,
             description: texto,
-            createdAt: Date.now(),
+            createdAt: formatearFecha(Date.now()),
+            likes: 0,
         })
-        .then()
-        .catch(e => console.log(e));
+            .then()
+            .catch(e => console.log(e));
     };
+
+    function fecha() {
+        const date = new Date();
+        return date.toLocaleDateString('es-AR');
+    }
+              
+    fecha(Date.now());
 
     return (
         <View style={styles.container}>
@@ -37,6 +45,6 @@ const styles = StyleSheet.create({
     input: { borderWidth: 1, borderColor: '#ccc', borderRadius: 8, padding: 10, marginBottom: 12, height: 120, textAlignVertical: 'top' },
     button: { backgroundColor: '#007bff', padding: 12, borderRadius: 8, marginTop: 8 },
     buttonText: { color: '#fff', textAlign: 'center' },
-})   
+})
 
 export default Posteo;
