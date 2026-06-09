@@ -12,6 +12,7 @@ function Posteo(props) {
             owner: auth.currentUser.email,
             description: texto,
             likes: 0,
+            listaLikes: [],
         })
             .then()
             .catch(e => console.log(e));

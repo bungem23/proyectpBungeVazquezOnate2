@@ -47,6 +47,8 @@ function Perfil({ navigation }) {
                     nombreUsuario={item.data.owner}
                     fecha={item.data.fecha}
                     texto={item.data.description}
+                    listaLikes={item.doc.listaLikes || []}
+                    id={item.id}
                 />
             )}
         />

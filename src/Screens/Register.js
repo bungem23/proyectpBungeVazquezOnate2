@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { View, Text, TextInput, Pressable, StyleSheet } from 'react-native';
-import { auth } from '../Firebase/config';
+import { auth, db } from '../Firebase/config';
 
 function Register({ navigation }) {
   const [Username, setUsername] = useState('');
