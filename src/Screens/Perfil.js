@@ -6,29 +6,43 @@ import { db, auth } from '../Firebase/config';
 
 
 function Perfil({ navigation }) {
-    const [posteos, setPosteos] = useState('');
+    const [posteos, setPosteos] = useState([]);
     const [loading, setLoading] = useState('');
+    const [usuario, setUsuario]= useState([]);
+    let EmailActual = auth.currentUser.email
+   
+
 
     useEffect(() => {
-        db.collection('posts').onSnapshot(
+        db.collection('posts').where('owner', '==', EmailActual).onSnapshot(
             docs => {
                 let posts = [];
                 docs.forEach(doc => {
                     posts.push({
                         id: doc.id,
                         data: doc.data()
-                    })
-
+                    }
+                )
                     {/*abajo poner un if para que avise que estan cargando*/ }
-
                 })
                 setPosteos(posts)
                 setLoading(false)
             }
 
         )
+        db.collection('usuarios').onSnapshot(
+            docs=> {
+                
+                docs.forEach(doc=>{
+                    if (doc.data().mail==EmailActual){
+                        usuario.push({
+                        id: doc.id,
+                        data: doc.data()
+                        
+                        })
+                    }})})
 
-    }, [])
+    }, [] )
     function logOut() {
         auth.signOut()
         navigation.navigate('Register')
@@ -36,9 +50,18 @@ function Perfil({ navigation }) {
     return (
         <View style={styles.container}>
             <Text style={styles.title}>Perfil</Text>
-            <Pressable style={styles.button} onPress={() => logOut()}>
-                <Text style={styles.buttonText}>Desloguearse</Text>
-            </Pressable>
+            <Text> {EmailActual}</Text>
+            <FlatList
+            data={usuario}
+            keyExtractor={item => item.id.toString()}
+            renderItem={({ item }) => (
+            <Text>{item.data.username}</Text>
+                  //revisar esto, el username al no estar guardado en auth hay que sacarlo de users//
+                
+            )}
+        />
+            
+            
         <FlatList
             data={posteos}
             keyExtractor={item => item.id.toString()}
@@ -47,11 +70,14 @@ function Perfil({ navigation }) {
                     nombreUsuario={item.data.owner}
                     fecha={item.data.fecha}
                     texto={item.data.description}
-                    listaLikes={item.doc.listaLikes || []}
+                    listaLikes={item.data.listaLikes || []}
                     id={item.id}
                 />
             )}
         />
+        <Pressable style={styles.button} onPress={() => logOut()}>
+                <Text style={styles.buttonText}>Desloguearse</Text>
+            </Pressable>
     </View>
 );
 }
