@@ -1,21 +1,22 @@
 import {View ,Text, Pressable, TextInput} from 'react-native'
 import Entypo from '@expo/vector-icons/Entypo';
 import {StyleSheet} from 'react-native';
-import {db} from '../Firebase/config'
+import {db, auth} from '../Firebase/config'
 import { useState } from 'react';
 
 function Post(props){
-    const [likes, setLikes] = useState(props.likes)
-    const [likeado, setLikeado] = useState(false)
+    const emailUsuario = auth.currentUser.email;
+    const [listaLikes, setListaLikes] = useState(props.listaLikes || []) // revisar ultima parte
+    const cantLikes = listaLikes.length
+    const likeado = listaLikes.includes(emailUsuario) // revisar
 
     const Likear = () => {
-        const nuevoLike = likes + 1;
-        setLikes(nuevoLike);
-        setLikeado(true);
+        const nuevaLista = [...listaLikes, emailUsuario] // revisar
+        setListaLikes(nuevaLista)
         db.collection('posts')
         .doc(props.id)
         .update({
-            likes: nuevoLike
+            listaLikes: nuevaLista,
         })
         .then(()=>{
             console.log("Nuevo Like");          
@@ -23,13 +24,12 @@ function Post(props){
     }
 
     const Deslikear = () => {
-        const nuevoLike = likes - 1;
-        setLikes(nuevoLike);
-        setLikeado(false); 
+        const nuevaLista = listaLikes.filter(e => e !== emailUsuario);
+        setListaLikes(nuevaLista);
         db.collection('posts')
         .doc(props.id)
         .update({ 
-            likes: nuevoLike 
+            listaLikes: nuevaLista
         })
         .then(()=> {
             console.log("Like removido");
@@ -40,8 +40,7 @@ function Post(props){
         <View style={styles.container}>
             <Text style={styles.nombreUsuario}>{props.nombreUsuario}</Text>
             <Text style={styles.texto}>{props.texto}</Text>
-            <Pressable onPress={()=> likeado ? Deslikear() : Likear()}><Entypo name="heart" size={24} color={likeado ? "red" : "black" } />{likes}</Pressable>
-            
+            <Pressable onPress={()=> likeado ? Deslikear() : Likear()}><Entypo name="heart" size={24} color={likeado ? "red" : "black" } /><Text>{cantLikes}</Text></Pressable>
         </View>
     )
 };

@@ -35,6 +35,7 @@ function HomePage(props) {
                         fecha={item.doc.fecha}
                         texto={item.doc.description}
                         likes={item.doc.likes}
+                        listaLikes={item.doc.listaLikes || []}
                         id={item.id}
                     />
                 )}
