@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { View, Text, TextInput, Pressable, StyleSheet } from 'react-native';
-import { auth } from '../Firebase/config';
+import { auth, db } from '../Firebase/config';
 
 function Register({ navigation }) {
   const [Username, setUsername] = useState('');
@@ -23,14 +23,17 @@ function onSubmit() {
 
     auth.createUserWithEmailAndPassword(email, password)
         .then((response) => {
-            db.collection('usuarios').add({
+            //revisar, lo hizo chati, lo que esta raro es que no usa .add y agrega el .doc junto al .set (a su vez esta en un return)
+            return db.collection('users').doc(response.user.uid).set({
                 email: email,
                 username: Username,
-            })
-            .then(() => setRegistered(true))
-            .catch(e => console.log(e));
+            });
         })
-        .catch(() => setRegisterError('Error al registrar el usuario'));
+        .then(() => setRegistered(true))
+        .catch((e) => {
+            console.log('Registro Firebase error:', e);
+            setRegisterError('Error al registrar el usuario');
+        });
 }
   return (
     <View style={styles.container}>

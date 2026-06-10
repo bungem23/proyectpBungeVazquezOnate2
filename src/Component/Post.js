@@ -41,6 +41,7 @@ function Post(props){
             <Text style={styles.nombreUsuario}>{props.nombreUsuario}</Text>
             <Text style={styles.texto}>{props.texto}</Text>
             <Pressable onPress={()=> likeado ? Deslikear() : Likear()}><Entypo name="heart" size={24} color={likeado ? "red" : "black" } />{likes}</Pressable>
+            
         </View>
     )
 };
