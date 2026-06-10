@@ -21,19 +21,16 @@ function onSubmit() {
         return;
     }
 
-    auth.createUserWithEmailAndPassword(email, password)
+   auth.createUserWithEmailAndPassword(email, password)
         .then((response) => {
-            //revisar, lo hizo chati, lo que esta raro es que no usa .add y agrega el .doc junto al .set (a su vez esta en un return)
-            return db.collection('users').doc(response.user.uid).set({
+            db.collection('usuarios').add({
                 email: email,
                 username: Username,
-            });
+            })
+            .then(() => setRegistered(true))
+            .catch(e => console.log(e));
         })
-        .then(() => setRegistered(true))
-        .catch((e) => {
-            console.log('Registro Firebase error:', e);
-            setRegisterError('Error al registrar el usuario');
-        });
+        .catch(() => setRegisterError('Error al registrar el usuario'));
 }
   return (
     <View style={styles.container}>

@@ -1,20 +1,27 @@
 import React from 'react';
 import { useState } from 'react';
-import { Text, View, StyleSheet, Pressable, TextInput } from 'react-native';
-import { auth } from '../Firebase/config';
-import Comentar from '../Component/Comentar';
+import { Text, View, Pressable, TextInput } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 function Comentar(props) {
+    const navigation = useNavigation();
     const [texto, setTexto] = useState("");
 
-    const Comentar = () => {
-        // Lógica para agregar el comentario a la base de datos
+    const guardarComentario = () => {
+        // acá va la lógica de Firestore
     };
+
     return (
         <View>
-            <Comentar/>
-            
+            <TextInput
+                value={texto}
+                onChangeText={setTexto}
+            />
+            <Pressable onPress={() => { guardarComentario(); navigation.navigate('NavigationTabs'); }}>
+                <Text>Comentar</Text>
+            </Pressable>
         </View>
     )
 }
+
 export default Comentar

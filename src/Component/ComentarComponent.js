@@ -2,10 +2,10 @@ import React from 'react';
 import { useState } from 'react';
 import { Text, View, StyleSheet, Pressable, TextInput } from 'react-native';
 
-function Comentar(props) {
+function ComentarComponent(props) {
     const [texto, setTexto] = useState("");
 
-    const Comentar = () => {
+    const Comentario = () => {
         // Lógica para agregar el comentario a la base de datos
     };
     return (
@@ -16,10 +16,10 @@ function Comentar(props) {
                 value={texto}
                 onChangeText={texto => setTexto(texto)}
             />
-            <Pressable style={styles.button} onPress={() => { Comentar(); props.navigation.navigate('NavigationTabs'); }}>
+            <Pressable style={styles.button} onPress={() => { Comentario(); props.navigation.navigate('NavigationTabs'); }}>
                 <Text style={styles.buttonText}> Comentar</Text>
             </Pressable>
         </View>
     )
 }
-export default Comentar
+export default ComentarComponent
