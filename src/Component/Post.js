@@ -3,20 +3,21 @@ import Entypo from '@expo/vector-icons/Entypo';
 import {StyleSheet} from 'react-native';
 import {db, auth} from '../Firebase/config'
 import { useState } from 'react';
+import firebase from 'firebase';
+
 
 function Post(props){
     const emailUsuario = auth.currentUser.email;
-    const [listaLikes, setListaLikes] = useState(props.listaLikes || []) // revisar ultima parte
-    const cantLikes = listaLikes.length
-    const likeado = listaLikes.includes(emailUsuario) // revisar
+    const cantLikes = props.listaLikes.length
+    const likeado = props.listaLikes.includes(emailUsuario) 
+    const [comment, setComment] = useState('')
+
 
     const Likear = () => {
-        const nuevaLista = [...listaLikes, emailUsuario] // revisar
-        setListaLikes(nuevaLista)
         db.collection('posts')
         .doc(props.id)
         .update({
-            listaLikes: nuevaLista,
+            listaLikes: firebase.firestore.FieldValue.arrayUnion(emailUsuario)
         })
         .then(()=>{
             console.log("Nuevo Like");          
@@ -24,24 +25,31 @@ function Post(props){
     }
 
     const Deslikear = () => {
-        const nuevaLista = listaLikes.filter(e => e !== emailUsuario);
-        setListaLikes(nuevaLista);
         db.collection('posts')
         .doc(props.id)
         .update({ 
-            listaLikes: nuevaLista
+            listaLikes: firebase.firestore.FieldValue.arrayRemove(emailUsuario)
         })
         .then(()=> {
             console.log("Like removido");
         })
     }
-
+//en lugar de hacer listas distintas y despues agregarlas, podemos usar ese metodo para agregar o sacar cosas de un array directamente//
     return(
         <View style={styles.container}>
             <Text style={styles.nombreUsuario}>{props.nombreUsuario}</Text>
             <Text style={styles.texto}>{props.texto}</Text>
             <Pressable onPress={()=> likeado ? Deslikear() : Likear()}><Entypo name="heart" size={24} color={likeado ? "red" : "black" } /><Text>{cantLikes}</Text></Pressable>
+            <TextInput
+                value={comment}
+                onChangeText={comment => setComment(comment)}
+            />
+            <Pressable style={styles.button} onPress={() => navigation.navigate('NavigationStackAnidado', {screen: "Comentar"})}>
+             <Text style={styles.buttonText}> comentar</Text></Pressable>
+             
+            
         </View>
+        
     )
 };
 

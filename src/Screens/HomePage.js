@@ -25,7 +25,7 @@ function HomePage(props) {
     }, []);
 
     return (
-        <View>
+        <View style={styles.flatList}>
             <FlatList
                 data={posts}
                 keyExtractor={item => item.id}
@@ -37,6 +37,9 @@ function HomePage(props) {
                         likes={item.doc.likes}
                         listaLikes={item.doc.listaLikes || []}
                         id={item.id}
+                        navegacion={navigation}
+                        
+                        /*ver si esta bien esto, no se como hacer para que se pueda navegar desde un componente*/
                     />
                 )}
             />
@@ -44,3 +47,11 @@ function HomePage(props) {
     )
 }
 export default HomePage
+
+const styles= StyleSheet.create({
+    flatList:{
+        width: '100%',
+        flex:1
+    }
+})
+//esto es para que se pueda scrollear//

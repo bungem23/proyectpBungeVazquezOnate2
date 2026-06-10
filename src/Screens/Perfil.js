@@ -8,7 +8,7 @@ import { db, auth } from '../Firebase/config';
 function Perfil({ navigation }) {
     const [posteos, setPosteos] = useState([]);
     const [loading, setLoading] = useState('');
-    const [usuario, setUsuario]= useState([]);
+    const [usuario, setUsuario]= useState('');
     let EmailActual = auth.currentUser.email
    
 
@@ -30,36 +30,30 @@ function Perfil({ navigation }) {
             }
 
         )
-        db.collection('usuarios').onSnapshot(
+        db.collection('usuarios').where('email', '==', EmailActual).onSnapshot(
             docs=> {
-                
+                let usuarios=[]
                 docs.forEach(doc=>{
-                    if (doc.data().mail==EmailActual){
-                        usuario.push({
+                        usuarios.push({
                         id: doc.id,
                         data: doc.data()
-                        
                         })
-                    }})})
+                    
+                    })
+                setUsuario(usuarios[0].data)})
+                console.log(usuario)
 
     }, [] )
     function logOut() {
         auth.signOut()
         navigation.navigate('Register')
     }
+    console.log(usuario)
     return (
         <View style={styles.container}>
             <Text style={styles.title}>Perfil</Text>
             <Text> {EmailActual}</Text>
-            <FlatList
-            data={usuario}
-            keyExtractor={item => item.id.toString()}
-            renderItem={({ item }) => (
-            <Text>{item.data.username}</Text>
-                  //revisar esto, el username al no estar guardado en auth hay que sacarlo de users//
-                
-            )}
-        />
+            <Text>{usuario.username }</Text>
             
             
         <FlatList
