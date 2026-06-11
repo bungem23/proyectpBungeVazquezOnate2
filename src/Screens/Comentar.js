@@ -1,59 +1,76 @@
 import React from 'react';
-import { useState } from 'react';
-import { Text, View, Pressable, TextInput } from 'react-native';
+import { useState, useEffect } from 'react';
+import { Text, View, Pressable, TextInput, FlatList} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import {db, auth} from '../Firebase/config'
+import { db, auth } from '../Firebase/config'
 import Post from '../Component/Post'
+import ComentarComponent from '../Component/ComentarComponent';
 
 function Comentar(props) {
     const navigation = useNavigation();
     const [texto, setTexto] = useState("");
-    const [Posteo, setPosteo] =useState([])
-    const id= props.params
+    const [Info, setInfo] = useState([]);
+    const [comentarios, setComentarios]= useState([])
+    const id = props.route.params
     console.log(id)
 
-    const guardarComentario = () => {
-        // acá va la lógica de Firestore
-    };
 
-    db.collection('post').where('id', '==', id ).onSnapshot(
-        docs=>{
-            let Post =[];
-            docs.forEach(doc=>{
-                Post.push({
-                    id: doc.id,
-                    data: doc.data()
+    useEffect(() => {
+        db.collection('posts').where('id', '==', id).onSnapshot(
+            docs => {
+                let Post = [];
+                docs.forEach(doc => {
+                    Post.push({
+                        id: doc.id,
+                        data: doc.data()
+                    })
+                    setInfo(Post)
                 })
-            this.setState({
-                Posteo: Post,
-            })
+            }
+        )
+    
+    db.collection('comentarios').where('id', '==', id).onSnapshot(
+        docs=> {
+            let comments =[];
+            docs.forEach(doc=> {
+                comments.push({
+                    id: doc.id,
+                    data:doc.data()
+                })
+                setComentarios(comments)
             })
         }
-    )
-db.collection('comentarios').where('id', '==', id).add({
-        owner: auth.currentUser.email,
-        texto: texto,
-       
+    )}
+        , [])
 
+    function Comentando() {
+        db.collection('comentarios').add({
+            owner: auth.currentUser.email,
+            description: texto,
+            createAt: Date.now(),
+            id: id
+        })
+            .then()
+            .catch(e => console.log(e));
+    };
 
-    })
-    
     return (
         <View>
-            <Post
-                    nombreUsuario={Posteo.owner}
-                    fecha={Posteo.fecha}
-                    texto={Posteo.description}
-                    listaLikes={Posteo.listaLikes || []}
-                    id={id}
 
-            />
+            <FlatList
+                data={comentarios}
+                keyExtractor={item => item.id}
+                renderItem={({ item }) => (
+                    <ComentarComponent
+                        nombreUsuario={item.data.owner}   
+                        texto={item.data.description}
+                    />)}/>
 
             <TextInput
                 value={texto}
-                onChangeText={texto=> setTexto(texto)}
+                onChangeText={texto => setTexto(texto)}
             />
-            <Pressable onPress={() => { guardarComentario(); navigation.navigate('NavigationTabs'); }}>
+            <Pressable onPress={() => Comentando()}>
                 <Text>Comentar</Text>
             </Pressable>
         </View>

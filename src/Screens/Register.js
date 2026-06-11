@@ -29,11 +29,12 @@ function onSubmit() {
             db.collection('usuarios').add({
                 email: email,
                 username: Username,
+                createdAt: Date.now()
             })
             .then(() => setRegistered(true))
-            .catch(e => console.log(e));
-        })
-        .catch(() => setRegisterError('Error al registrar el usuario'));
+            
+            })
+          .catch((error) => setRegisterError(error.message));
 }
   return (
     <View style={styles.container}>

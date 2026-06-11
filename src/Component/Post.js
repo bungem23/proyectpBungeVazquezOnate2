@@ -2,7 +2,7 @@ import {View ,Text, Pressable, TextInput} from 'react-native'
 import Entypo from '@expo/vector-icons/Entypo';
 import {StyleSheet} from 'react-native';
 import {db, auth} from '../Firebase/config'
-import { useState } from 'react';
+import { useState, useEffect} from 'react';
 import firebase from 'firebase';
 
 

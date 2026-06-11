@@ -5,7 +5,7 @@ import Post from '../Component/Post';
 import { db, auth } from '../Firebase/config';
 
 
-function Perfil({ navigation }) {
+function Perfil(props) {
     const [posteos, setPosteos] = useState([]);
     const [loading, setLoading] = useState('');
     const [usuario, setUsuario]= useState('');
@@ -67,6 +67,8 @@ function Perfil({ navigation }) {
                     texto={item.data.description}
                     listaLikes={item.data.listaLikes || []}
                     id={item.id}
+                    navegacion={props.navigation}
+                    
                 />)
         }/>
     }

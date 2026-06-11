@@ -28,7 +28,7 @@ function Posteo(props) {
                 value={texto}
                 onChangeText={texto => setTexto(texto)}
             />
-            <Pressable style={styles.button} onPress={() => { Postear(); props.navigation.navigate('NavigationTabs');}}>
+            <Pressable style={styles.button} onPress={() => { Postear(); props.navigation.navigate('NavigationTabs', {screen:"HomePage"})}}>
                 <Text style={styles.buttonText}> Postear</Text>
             </Pressable>
         </View>
