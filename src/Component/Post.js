@@ -12,6 +12,9 @@ function Post(props){
     const likeado = props.listaLikes.includes(emailUsuario) 
     const [comment, setComment] = useState('')
 
+    const irComentario = () =>
+        props.navegacion.navigate('Home', {screen: "Comentar", params:props.id})
+
 
     const Likear = () => {
         db.collection('posts')
@@ -44,7 +47,7 @@ function Post(props){
                 value={comment}
                 onChangeText={comment => setComment(comment)}
             />
-            <Pressable style={styles.button} onPress={() => props.navigation.navigate('NavigationStackAnidado', {screen: "Comentar"})}>
+            <Pressable style={styles.button} onPress={() => irComentario()}>
              <Text style={styles.buttonText}> comentar</Text></Pressable>
              
             

@@ -38,11 +38,12 @@ function HomePage(props) {
                         likes={item.doc.likes}
                         listaLikes={item.doc.listaLikes || []}
                         id={item.id}
-                        
+                        navegacion={props.navigation}
                         
                         /*ver si esta bien esto, no se como hacer para que se pueda navegar desde un componente*/
                     />
                 )}
+                
             />
             }
             
