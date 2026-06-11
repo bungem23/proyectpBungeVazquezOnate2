@@ -12,6 +12,8 @@ function Post(props){
     const likeado = props.listaLikes.includes(emailUsuario) 
     const [comment, setComment] = useState('')
 
+    console.log(props.fecha)
+
     const irComentario = () =>
         props.navegacion.navigate('Home', {screen: "Comentar", params:props.id})
 

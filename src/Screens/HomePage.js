@@ -8,7 +8,7 @@ function HomePage(props) {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        db.collection('posts').onSnapshot(
+        db.collection('posts').orderBy('createAt', 'desc').onSnapshot(
             docs => {
                 const posts = [];
                 docs.forEach(doc => {
