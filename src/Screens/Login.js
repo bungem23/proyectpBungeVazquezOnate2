@@ -10,7 +10,7 @@ function Login({ navigation }) {
 
     useEffect(() => {
         auth.onAuthStateChanged(user => {
-            if (user) {
+            if (user){
                 setLoggedIn(true);
             }
         });
@@ -19,6 +19,8 @@ function Login({ navigation }) {
             navigation.navigate('NavigationTabs');
         }
     }, [loggedIn, navigation]);
+
+    /* por que funciona como componentdidupdate sin didmount? por qu eescucha a navigation?/ Lo que hace ahora es cambiar el bool o cuando haces login o cuando entras y ya estas log  */ 
 
     const controlarLogin = () => {
         auth
@@ -36,7 +38,7 @@ function Login({ navigation }) {
                 placeholder="Email"
                 keyboardType="email-address"
                 value={email}
-                onChangeText={setEmail}
+                onChangeText={text =>setEmail(text)}
             />
 
             <TextInput
@@ -44,7 +46,7 @@ function Login({ navigation }) {
                 placeholder="Password"
                 secureTextEntry={true}
                 value={password}
-                onChangeText={setPassword}
+                onChangeText={text =>setPassword(text)}
             />
 
             {loginError ? <Text style={styles.error}>{loginError}</Text> : null}

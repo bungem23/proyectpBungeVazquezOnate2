@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-import { Text, View, StyleSheet, Pressable, TextInput, FlatList } from 'react-native';
+import { Text, View, StyleSheet, Pressable, TextInput, FlatList, ActivityIndicator } from 'react-native';
 import Post from '../Component/Post';
 import { db, auth } from '../Firebase/config';
 
@@ -55,7 +55,8 @@ function Perfil({ navigation }) {
             <Text> {EmailActual}</Text>
             <Text>{usuario.username }</Text>
             
-            
+        {loading==true? 
+        <ActivityIndicator size='large' color='green'/>:
         <FlatList
             data={posteos}
             keyExtractor={item => item.id.toString()}
@@ -66,9 +67,11 @@ function Perfil({ navigation }) {
                     texto={item.data.description}
                     listaLikes={item.data.listaLikes || []}
                     id={item.id}
-                />
-            )}
-        />
+                />)
+        }/>
+    }
+            
+        
         <Pressable style={styles.button} onPress={() => logOut()}>
                 <Text style={styles.buttonText}>Desloguearse</Text>
             </Pressable>

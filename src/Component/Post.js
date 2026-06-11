@@ -44,7 +44,7 @@ function Post(props){
                 value={comment}
                 onChangeText={comment => setComment(comment)}
             />
-            <Pressable style={styles.button} onPress={() => navigation.navigate('NavigationStackAnidado', {screen: "Comentar"})}>
+            <Pressable style={styles.button} onPress={() => props.navigation.navigate('NavigationStackAnidado', {screen: "Comentar"})}>
              <Text style={styles.buttonText}> comentar</Text></Pressable>
              
             

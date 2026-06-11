@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, StyleSheet, Pressable, FlatList } from 'react-native';
+import { Text, View, StyleSheet, Pressable, FlatList, ActivityIndicator } from 'react-native';
 import { db } from '../Firebase/config';
 import Post from '../Component/Post'
 
@@ -26,6 +26,7 @@ function HomePage(props) {
 
     return (
         <View style={styles.flatList}>
+            {loading==true? <ActivityIndicator size='large' color='green'/>:
             <FlatList
                 data={posts}
                 keyExtractor={item => item.id}
@@ -43,6 +44,8 @@ function HomePage(props) {
                     />
                 )}
             />
+            }
+            
         </View>
     )
 }
