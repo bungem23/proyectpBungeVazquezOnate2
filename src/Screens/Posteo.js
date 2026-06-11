@@ -7,10 +7,10 @@ function Posteo(props) {
     const [texto, setTexto] = useState("");
 
     const Postear = () => {
-        const fecha = Date.now();
         db.collection('posts').add({
             owner: auth.currentUser.email,
             description: texto,
+            createAt: Date.now(),
             likes: 0,
             listaLikes: [],
             comentarios: [],
@@ -28,7 +28,7 @@ function Posteo(props) {
                 value={texto}
                 onChangeText={texto => setTexto(texto)}
             />
-            <Pressable style={styles.button} onPress={() => { Postear(); props.navigation.navigate('NavigationTabs'); }}> //corregir esto para que cuando posteas te mande a home//
+            <Pressable style={styles.button} onPress={() => { Postear(); props.navigation.navigate('NavigationTabs');}}>
                 <Text style={styles.buttonText}> Postear</Text>
             </Pressable>
         </View>
