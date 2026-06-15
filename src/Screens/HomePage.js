@@ -26,7 +26,7 @@ function HomePage(props) {
 
     return (
         <View style={styles.flatList}>
-            {loading == true ? <ActivityIndicator size='large' color='green' /> :
+            {loading == true ? <ActivityIndicator size='large' color='blue' style={styles.loading}/> :
                 <FlatList
                     data={posts}
                     keyExtractor={item => item.id}
@@ -54,6 +54,9 @@ const styles = StyleSheet.create({
         width: '100%',
         flex: 1,
         alignContent: 'center'
+    },
+    loading: {
+        marginTop: '20%'
     }
 })
 //esto es para que se pueda scrollear//

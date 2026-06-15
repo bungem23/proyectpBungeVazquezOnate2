@@ -63,7 +63,7 @@ function Comentar(props) {
 
             <Text style={styles.sectionTitle}>Comentarios</Text>
 
-            {(loading) ? <ActivityIndicator size='large' color='green' /> : (nocomentario) ? <Text style={styles.emptyText}>No hay comentarios para este post</Text> : 
+            {(loading) ? <ActivityIndicator size='large' color='blue' style={styles.loading}/> : (nocomentario) ? <Text style={styles.emptyText}>No hay comentarios para este post</Text> : 
             <FlatList
                 data={comentarios}
                 keyExtractor={item => item.id}
