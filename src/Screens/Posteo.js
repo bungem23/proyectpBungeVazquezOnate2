@@ -20,7 +20,6 @@ function Posteo(props) {
     };
 
     const usuario = auth.currentUser;
-    console.log(id)
     return (
         <View style={styles.container}>
             <Text style={styles.title}>{usuario.username}</Text>
