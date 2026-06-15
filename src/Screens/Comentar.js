@@ -5,32 +5,23 @@ import { useNavigation } from '@react-navigation/native';
 import { db, auth } from '../Firebase/config'
 import Post from '../Component/Post'
 import ComentarComponent from '../Component/ComentarComponent';
+import { ActivityIndicator } from 'react-native-web';
 
 function Comentar(props) {
     const navigation = useNavigation();
     const [texto, setTexto] = useState("");
     const [Info, setInfo] = useState([]);
     const [comentarios, setComentarios] = useState([])
+    const [nocomentario, setNocomentario] = useState(false)
+    const [loading, setLoading] = useState(true)
     const id = props.route.params
-    console.log(Info)
+
 
     useEffect(() => {
+        setLoading(true)
         db.collection('posts').doc(id).onSnapshot(doc => {
             setInfo(doc.data())
         })
-
-        //lo hice mas sencillo porque otra forma no sabia. 
-        //        db.collection('posts').onSnapshot(
-        //            docs => {
-        //                const Post = [];
-        //                docs.forEach(doc => {
-        //                    Post.push({
-        //                        id: doc.id,
-        //                        data: doc.data()
-        //                    })
-        //                })
-        //                console.log(Post)
-        //            }
 
 
         db.collection('comentarios').where('id', '==', id).onSnapshot(
@@ -43,9 +34,12 @@ function Comentar(props) {
                     })
                 })
                 setComentarios(comments)
+                if (comments.length == 0) { setNocomentario(true) }
+                else if (comments.length != 0) { setNocomentario(false) }
+                setLoading(false)
             }
         )
-    }, [])
+    }, [id])
 
     function Comentando() {
         db.collection('comentarios').add({
@@ -54,7 +48,7 @@ function Comentar(props) {
             createAt: Date.now(),
             id: id
         })
-            .then()
+            .then(() => setTexto(""))
             .catch(e => console.log(e));
     };
 
@@ -69,9 +63,7 @@ function Comentar(props) {
 
             <Text style={styles.sectionTitle}>Comentarios</Text>
 
-            <FlatList
-                style={styles.commentsList}
-                contentContainerStyle={styles.commentsContent}
+            {(loading) ? <ActivityIndicator size='large' color='green' /> : (nocomentario) ? <Text style={styles.emptyText}>No hay comentarios para este post</Text> : <FlatList
                 data={comentarios}
                 keyExtractor={item => item.id}
                 renderItem={({ item }) => (
@@ -80,8 +72,9 @@ function Comentar(props) {
                         texto={item.data.description}
                     />
                 )}
-                ListEmptyComponent={<Text style={styles.emptyText}>Aún no hay comentarios</Text>}
-            />
+
+            />}
+
 
             <View style={styles.inputSection}>
                 <TextInput
@@ -89,8 +82,7 @@ function Comentar(props) {
                     value={texto}
                     onChangeText={texto => setTexto(texto)}
                     placeholder="Escribe tu comentario"
-                    placeholderTextColor="#999"
-                    multiline
+
                 />
                 <Pressable style={styles.button} onPress={() => Comentando()}>
                     <Text style={styles.buttonText}>Comentar</Text>
@@ -108,11 +100,11 @@ const styles = StyleSheet.create({
     },
     postContainer: {
         marginBottom: 20,
-        borderWidth: 1,
-        borderColor: '#ccc',
         borderRadius: 10,
         padding: 16,
-        backgroundColor: '#fafafa',
+        backgroundColor: '#ffffff',
+          borderWidth: 1,
+        borderColor: '#ccc',
     },
     sectionTitle: {
         fontSize: 18,
@@ -120,22 +112,18 @@ const styles = StyleSheet.create({
         fontWeight: '700',
         color: '#333',
     },
-    commentsList: {
-        flex: 1,
-        marginBottom: 20,
-    },
-    commentsContent: {
-        paddingBottom: 16,
-    },
+
     emptyText: {
         textAlign: 'center',
         color: '#666',
-        marginTop: 20,
+        margin: 100
     },
     inputSection: {
         borderTopWidth: 1,
         borderTopColor: '#eee',
         paddingTop: 16,
+        topMargin: 50
+
     },
     input: {
         borderWidth: 1,

@@ -1,56 +1,56 @@
-import {View ,Text, Pressable, TextInput} from 'react-native'
+import { View, Text, Pressable, TextInput } from 'react-native'
 import Entypo from '@expo/vector-icons/Entypo';
-import {StyleSheet} from 'react-native';
-import {db, auth} from '../Firebase/config'
-import { useState, useEffect} from 'react';
+import { StyleSheet } from 'react-native';
+import { db, auth } from '../Firebase/config'
+import { useState, useEffect } from 'react';
 import firebase from 'firebase';
 
 
-function Post(props){
+function Post(props) {
     const emailUsuario = auth.currentUser.email;
     const cantLikes = props.listaLikes.length
-    const likeado = props.listaLikes.includes(emailUsuario) 
+    const likeado = props.listaLikes.includes(emailUsuario)
     const [comment, setComment] = useState('')
 
     const irComentario = () =>
-        props.navegacion.navigate('Home', {screen: "Comentar", params:props.id})
-        console.log(props.id)
+        props.navegacion.navigate('Home', { screen: "Comentar", params: props.id })
+
 
     const Likear = () => {
         db.collection('posts')
-        .doc(props.id)
-        .update({
-            listaLikes: firebase.firestore.FieldValue.arrayUnion(emailUsuario)
-        })
-        .then(()=>{
-            console.log("Nuevo Like");          
-        })
+            .doc(props.id)
+            .update({
+                listaLikes: firebase.firestore.FieldValue.arrayUnion(emailUsuario)
+            })
+            .then(() => {
+                console.log("Nuevo Like");
+            })
     }
 
     const Deslikear = () => {
         db.collection('posts')
-        .doc(props.id)
-        .update({ 
-            listaLikes: firebase.firestore.FieldValue.arrayRemove(emailUsuario)
-        })
-        .then(()=> {
-            console.log("Like removido");
-        })
+            .doc(props.id)
+            .update({
+                listaLikes: firebase.firestore.FieldValue.arrayRemove(emailUsuario)
+            })
+            .then(() => {
+                console.log("Like removido");
+            })
     }
-//en lugar de hacer listas distintas y despues agregarlas, podemos usar ese metodo para agregar o sacar cosas de un array directamente//
-    return(
+
+    return (
         <View style={styles.container}>
             <Text style={styles.nombreUsuario}>{props.nombreUsuario}</Text>
             <Text style={styles.texto}>{props.texto}</Text>
-            <Pressable onPress={()=> likeado ? Deslikear() : Likear()}><Entypo name="heart" size={24} color={likeado ? "red" : "black" } /><Text>{cantLikes}</Text></Pressable>
+            <Pressable onPress={() => likeado ? Deslikear() : Likear()}><Entypo name="heart" size={24} color={likeado ? "red" : "black"} /><Text>{cantLikes}</Text></Pressable>
             <TextInput
                 value={comment}
                 onChangeText={comment => setComment(comment)}
             />
             <Pressable style={styles.button} onPress={() => irComentario()}>
-             <Text style={styles.buttonText}> comentar</Text></Pressable>
+                <Text style={styles.buttonText}> comentar</Text></Pressable>
         </View>
-        
+
     )
 };
 

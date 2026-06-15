@@ -4,17 +4,17 @@ import HomePage from '../Screens/HomePage'
 import { FA6Style } from "@expo/vector-icons/build/FontAwesome6";
 
 
-const Stack=createNativeStackNavigator();
+const Stack = createNativeStackNavigator();
 
 
-function NavegacionStackAnidado(props){
-    return(
-        
-            <Stack.Navigator>
-                <Stack.Screen name="HomePage" component={HomePage} options={{headerShown: false}}/>
-                <Stack.Screen name="Comentar" component={Comentar} options={{headerShown: false}}/>
-            </Stack.Navigator>
-      
+function NavegacionStackAnidado(props) {
+    return (
+
+        <Stack.Navigator>
+            <Stack.Screen name="HomePage" component={HomePage} options={{ headerShown: false }} />
+            <Stack.Screen name="Comentar" component={Comentar} options={{ headerShown: false }} />
+        </Stack.Navigator>
+
     )
 }
 

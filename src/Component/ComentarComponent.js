@@ -3,14 +3,14 @@ import { useState } from 'react';
 import { Text, View, StyleSheet, Pressable, TextInput } from 'react-native';
 
 function ComentarComponent(props) {
-    
-    
-    return(
+
+
+    return (
         <View style={styles.container}>
             <Text style={styles.nombreUsuario}>{props.nombreUsuario}</Text>
             <Text style={styles.texto}>{props.texto}</Text>
         </View>
-        
+
     )
 }
 const styles = StyleSheet.create({
@@ -28,27 +28,12 @@ const styles = StyleSheet.create({
         marginBottom: 4,
         color: '#333',
     },
-    fecha: {
-        fontSize: 12,
-        color: '#999',
-        marginBottom: 8,
-    },
+
     texto: {
         fontSize: 16,
         color: '#333',
         marginBottom: 12,
-    },
-    button: {
-        backgroundColor: '#007bff',
-        padding: 12,
-        borderRadius: 8,
-        marginTop: 8,
-        alignSelf: 'flex-start',
-    },
-    buttonText: {
-        color: '#fff',
-        textAlign: 'center',
-    },
+    }
 });
 
 export default ComentarComponent
