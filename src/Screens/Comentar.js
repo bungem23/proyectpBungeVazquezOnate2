@@ -42,7 +42,8 @@ function Comentar(props) {
     }, [id])
 
     function Comentando() {
-        db.collection('comentarios').add({
+        if (texto.length > 0){
+            db.collection('comentarios').add({
             owner: auth.currentUser.email,
             description: texto,
             createAt: Date.now(),
@@ -50,6 +51,7 @@ function Comentar(props) {
         })
             .then(() => setTexto(""))
             .catch(e => console.log(e));
+        }
     };
 
     return (
@@ -98,6 +100,7 @@ const styles = StyleSheet.create({
         flex: 1,
         padding: 20,
         backgroundColor: '#fff',
+        width: '100%',
     },
     postContainer: {
         marginBottom: 20,
