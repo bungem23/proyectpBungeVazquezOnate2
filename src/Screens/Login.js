@@ -10,15 +10,18 @@ function Login(props) {
 
     useEffect(() => {
         auth.onAuthStateChanged(user => {
-            if (user) {
+            if (user!= null) {
                 setLoggedIn(true);
             }
-        });
+        })}, []);
 
+    useEffect(()=> {
         if (loggedIn) {
             props.navigation.navigate('NavigationTabs');
         }
-    }, [loggedIn]);
+    }, [loggedIn])
+
+        ;
 
     
     const controlarLogin = () => {

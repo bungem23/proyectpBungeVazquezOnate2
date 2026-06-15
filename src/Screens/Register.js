@@ -47,7 +47,7 @@ function Register(props) {
       <TextInput
         style={styles.input}
         placeholder="Nombre de usuario"
-        keyboardType="Username"
+        keyboardType="default"
         value={username}
         onChangeText={text => setUsername(text)}
       />
@@ -61,6 +61,7 @@ function Register(props) {
       <TextInput
         style={styles.input}
         placeholder="Password"
+        keyboardType="default"
         secureTextEntry={true}
         value={password}
         onChangeText={text => setPassword(text)}

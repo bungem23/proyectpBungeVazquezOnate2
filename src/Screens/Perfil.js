@@ -6,9 +6,8 @@ import { db, auth } from '../Firebase/config';
 
 
 function Perfil(props) {
-    const [posteos, setPosteos] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [usuario, setUsuario]= useState('');
+    const [posteos, setPosteos] = useState(false);
+    const [usuario, setUsuario]= useState(false);
     const [nopost, setNopost] = useState(false)
     let EmailActual = auth.currentUser.email
    
@@ -30,8 +29,6 @@ function Perfil(props) {
                 }else if(posts.length!=0){
                     setNopost(false)
                 }
-                
-                
             }
 
         )
@@ -47,7 +44,7 @@ function Perfil(props) {
                     })
 
                 setUsuario(usuarios[0].data)})
-        setLoading(false)
+        
                 
 
     }, [] )
@@ -60,11 +57,17 @@ function Perfil(props) {
     
     return (
         <View style={styles.container}>
+            
+        {posteos==false || usuario==false? 
+        <ActivityIndicator size='large' color='green'/>: nopost==true? 
+        <View>
             <Text style={styles.title}>Bienvenido: {usuario.user}</Text>
             <Text style={styles.mail}>{usuario.email}</Text>
-            
-        {loading==true? 
-        <ActivityIndicator size='large' color='green'/>: nopost==true? <Text style={styles.emptyText}> Aún no has hecho tu primera publicación</Text>:<FlatList
+            <Text style={styles.emptyText}> Aún no has hecho tu primera publicación</Text></View>:
+            <View> 
+            <Text style={styles.title}>Bienvenido: {usuario.user}</Text>
+            <Text style={styles.mail}>{usuario.email}</Text>
+            <FlatList
             data={posteos}
             keyExtractor={item => item.id.toString()}
             renderItem={({ item }) => (
@@ -77,7 +80,7 @@ function Perfil(props) {
                     navegacion={props.navigation}
                     
                 />)
-        }/>
+            }/></View>
     }
             
         

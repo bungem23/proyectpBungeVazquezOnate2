@@ -1,16 +1,16 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-import { Text, View, Pressable, TextInput, FlatList, StyleSheet } from 'react-native';
+import { Text, View, Pressable, TextInput, FlatList, StyleSheet, ActivityIndicator } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { db, auth } from '../Firebase/config'
 import Post from '../Component/Post'
 import ComentarComponent from '../Component/ComentarComponent';
-import { ActivityIndicator } from 'react-native-web';
+
 
 function Comentar(props) {
     const navigation = useNavigation();
     const [texto, setTexto] = useState("");
-    const [Info, setInfo] = useState([]);
+    const [Info, setInfo] = useState({});
     const [comentarios, setComentarios] = useState([])
     const [nocomentario, setNocomentario] = useState(false)
     const [loading, setLoading] = useState(true)
@@ -63,7 +63,8 @@ function Comentar(props) {
 
             <Text style={styles.sectionTitle}>Comentarios</Text>
 
-            {(loading) ? <ActivityIndicator size='large' color='green' /> : (nocomentario) ? <Text style={styles.emptyText}>No hay comentarios para este post</Text> : <FlatList
+            {(loading) ? <ActivityIndicator size='large' color='green' /> : (nocomentario) ? <Text style={styles.emptyText}>No hay comentarios para este post</Text> : 
+            <FlatList
                 data={comentarios}
                 keyExtractor={item => item.id}
                 renderItem={({ item }) => (
@@ -122,7 +123,7 @@ const styles = StyleSheet.create({
         borderTopWidth: 1,
         borderTopColor: '#eee',
         paddingTop: 16,
-        topMargin: 50
+        marginTop: 50
 
     },
     input: {
