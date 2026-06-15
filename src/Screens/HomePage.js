@@ -19,40 +19,41 @@ function HomePage(props) {
                 });
                 setPosts(posts);
                 setLoading(false);
-                console.log(posts);
+
             }
         )
     }, []);
 
     return (
         <View style={styles.flatList}>
-            {loading==true? <ActivityIndicator size='large' color='green'/>:
-            <FlatList
-                data={posts}
-                keyExtractor={item => item.id}
-                renderItem={({ item }) => (
-                    <Post
-                        nombreUsuario={item.doc.owner}
-                        fecha={item.doc.fecha}
-                        texto={item.doc.description}
-                        likes={item.doc.likes}
-                        listaLikes={item.doc.listaLikes || []}
-                        id={item.id}
-                        navegacion={props.navigation}
-                        /*ver si esta bien esto, no se como hacer para que se pueda navegar desde un componente*/
-                    />
-                )}
-            />
+            {loading == true ? <ActivityIndicator size='large' color='green' /> :
+                <FlatList
+                    data={posts}
+                    keyExtractor={item => item.id}
+                    renderItem={({ item }) => (
+                        <Post
+                            nombreUsuario={item.doc.owner}
+                            fecha={item.doc.fecha}
+                            texto={item.doc.description}
+                            likes={item.doc.likes}
+                            listaLikes={item.doc.listaLikes}
+                            id={item.id}
+                            navegacion={props.navigation}
+
+                        />
+                    )}
+                />
             }
         </View>
     )
 }
 export default HomePage
 
-const styles= StyleSheet.create({
-    flatList:{
+const styles = StyleSheet.create({
+    flatList: {
         width: '100%',
-        flex:1
+        flex: 1,
+        alignContent: 'center'
     }
 })
 //esto es para que se pueda scrollear//

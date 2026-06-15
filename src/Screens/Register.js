@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react';
 import { View, Text, TextInput, Pressable, StyleSheet } from 'react-native';
 import { auth, db } from '../Firebase/config';
 
-function Register({ navigation }) {
-  const [Username, setUsername] = useState('');
+function Register(props) {
+  const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [registered, setRegistered] = useState(false);
@@ -11,31 +11,35 @@ function Register({ navigation }) {
 
   useEffect(() => {
     if (registered) {
-      navigation.navigate('Login');
+      props.navigation.navigate('Login');
     }
-  }, [registered, navigation]);
+  }, [registered]);
 
-function onSubmit() {
-    if (!email.includes("@")) {
-        setRegisterError("Mail inválido");
-          return;}
-      else if(password.length<6){
-        setRegisterError("Contraseña menor a 6 caracteres");
-          return;
+  function onSubmit() {
+    if (email == "" || password == "" || username == "") {
+      setRegisterError("Debe completar todos los campos");
+      return;
+    }
+    else if (!email.includes("@")) {
+      setRegisterError("Mail inválido");
+      return;
+    } else if (password.length < 6) {
+      setRegisterError("Contraseña menor a 6 caracteres");
+      return;
     }
 
-   auth.createUserWithEmailAndPassword(email, password)
-        .then((response) => {
-            db.collection('usuarios').add({
-                email: email,
-                username: Username,
-                createdAt: Date.now()
-            })
-            .then(() => setRegistered(true))
-            
-            })
-          .catch((error) => setRegisterError(error.message));
-}
+    auth.createUserWithEmailAndPassword(email, password)
+      .then((response) => {
+        db.collection('usuarios').add({
+          email: email,
+          user: username,
+          createdAt: Date.now()
+        })
+          .then(() => setRegistered(true))
+
+      })
+      .catch((error) => setRegisterError(error.message));
+  }
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Formulario de Registro</Text>
@@ -43,32 +47,33 @@ function onSubmit() {
       <TextInput
         style={styles.input}
         placeholder="Nombre de usuario"
-        keyboardType="Username"
-        value={Username}
-        onChangeText={text => setUsername(text)} 
+        keyboardType="default"
+        value={username}
+        onChangeText={text => setUsername(text)}
       />
       <TextInput
         style={styles.input}
         placeholder="Email"
         keyboardType="email-address"
         value={email}
-        onChangeText={text => setEmail(text)} 
+        onChangeText={text => setEmail(text)}
       />
       <TextInput
         style={styles.input}
         placeholder="Password"
+        keyboardType="default"
         secureTextEntry={true}
         value={password}
         onChangeText={text => setPassword(text)}
       />
 
-      {registerError ? <Text style={styles.error}>{registerError}</Text> : null}
+      <Text style={styles.error}>{registerError}</Text> 
 
-      <Pressable style={styles.button} onPress={() => {onSubmit()}}>
+      <Pressable style={styles.button} onPress={() => { onSubmit() }}>
         <Text style={styles.buttonText}>Registrarse</Text>
       </Pressable>
 
-      <Pressable style={styles.button} onPress={() => navigation.navigate('Login')}>
+      <Pressable style={styles.button} onPress={() => props.navigation.navigate('Login')}>
         <Text style={styles.buttonText}>Ya tengo cuenta</Text>
       </Pressable>
     </View>
@@ -78,8 +83,8 @@ function onSubmit() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
     padding: 20,
+    justifyContent: 'center',
   },
   title: {
     fontSize: 24,
@@ -87,24 +92,25 @@ const styles = StyleSheet.create({
   },
   input: {
     borderWidth: 1,
+    marginBottom: 12,
     borderColor: '#ccc',
     borderRadius: 8,
     padding: 10,
-    marginBottom: 12,
   },
   button: {
     backgroundColor: '#007bff',
     padding: 12,
-    borderRadius: 8,
     marginTop: 8,
+    borderRadius: 8,
   },
   buttonText: {
     color: '#fff',
     textAlign: 'center',
   },
   error: {
-    color: 'red',
     marginBottom: 8,
+    color: 'red',
+    
   },
 });
 
